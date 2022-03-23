@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "main.h": "c"
+        "main.h": "c",
+        "stm32f3xx_hal.h": "c",
+        "com_protocol.h": "c"
     }
 }

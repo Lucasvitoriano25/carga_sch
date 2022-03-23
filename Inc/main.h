@@ -50,9 +50,9 @@ typedef enum {
 } E_Carga_State;
 
 typedef struct {
-  E_Carga_State state;
-  uint16_t value;
-  uint8_t time;
+  E_Carga_State state_load;
+  uint16_t value_state_load;
+  uint8_t time_load_on;
 } Load;
 /* USER CODE END EC */
 

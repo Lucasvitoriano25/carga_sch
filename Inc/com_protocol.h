@@ -1,7 +1,7 @@
 #ifndef __COM_PROTOCOL_H
 #define __COM_PROTOCOL_H
 
-#include "stdbool.h"
+#include "stm32f3xx_hal.h"
 
 #define tamanho 8
 typedef enum
@@ -35,9 +35,12 @@ typedef struct
 } MensagemTypeDef;
 
 void COM_Protocol_Receive_Communication_Control(StatusMenssageTypeDef *Status_Message, 
-E_Carga_State *Message_Received);
+Load *Message_Received);
+void COM_Protocol_Transceiver_Communication_Control(StatusMenssageTypeDef *Status_Message, 
+uint8_t  *Message_To_Communication);
 StatusMenssageTypeDef COM_Protocol_Check_Menssage(uint8_t *data, uint32_t length);
 bool CHECKSUM(uint8_t *data, uint8_t length);
-E_Carga_State Convert_Received_Serial_Message_To_Load_State(uint_t Received_Message);
-
+Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[]);
+uint16_t Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[]);
+uint8_t COM_Protocol_Report_Erro(StatusMenssageTypeDef Erro);
 #endif /* __COM_PROTOCOL_H */

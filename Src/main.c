@@ -142,7 +142,7 @@ int main(void)
     set_Potency_Value(potency_Value_W);
 
     set_Resistance_Value(resistance_Value_Ohms);
-    */]
+    */
     
     Load_State_Machine();
 

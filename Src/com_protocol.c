@@ -1,5 +1,5 @@
 #include "main.h"
-#include "stm32f1xx_hal.h"
+#include "stm32f3xx_hal.h"
 #include "stdbool.h"
 
 #include "com_protocol.h"
@@ -9,8 +9,11 @@
 extern UART_HandleTypeDef huart1;
 uint16_t teste, teste2;
 uint8_t Mensagem[tamanho];
-E_Carga_State Returned_Load_State;
+uint8_t Status_Message_Receiver;
 uint8_t Received_UART_Message[tamanho];
+E_Carga_State Returned_Load_State;
+StatusMenssageTypeDef Status_Message_Transceiver;
+
 
 void COM_Protocol_Receive_Communication_Control(StatusMenssageTypeDef *Status_Message, 
 Load *Message_Received)
@@ -20,7 +23,7 @@ Load *Message_Received)
   
   *Status_Message  = TIMEOUT;
   
-  while(((*Status_Message != OK) && i < Attempts)
+  while((*Status_Message != OK) && i < Attempts)
   {
     if (HAL_UART_Receive(&USART_MICRO_COMMUNICATION, Received_UART_Message, tamanho, 100) != HAL_OK)
     {
@@ -29,43 +32,41 @@ Load *Message_Received)
     }
     else
     {
-      if((*Status = COM_Protocol_Check_Menssage(Received_UART_Message, tamanho)) != OK)
+      if((*Status_Message = COM_Protocol_Check_Menssage(Received_UART_Message, tamanho)) != OK)
       {
         i++;
+        Status_Message_Receiver = COM_Protocol_Report_Erro(*Status_Message);
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, &Status_Message_Receiver);
       }
       else
       {
+        Status_Message_Receiver = COM_Protocol_Report_Erro(*Status_Message);
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, &Status_Message_Receiver);
         *Message_Received = Convert_Received_Serial_Message_To_Load_State(Received_UART_Message);
-        *Status_Message = OK;
       }
     }
   }
 }
 
 void COM_Protocol_Transceiver_Communication_Control(StatusMenssageTypeDef *Status_Message, 
-uint8_t *Message_To_Communication)
+uint8_t  *Message_To_Communication)
 {
   #define Attempts 3
   uint8_t i=0;
   
   *Status_Message  = TIMEOUT;
   
-  while(((*Status_Message != OK) && i < Attempts)
+  while((*Status_Message != OK) && i < Attempts)
   {
     if (HAL_UART_Transmit(&USART_MICRO_COMMUNICATION, Message_To_Communication, tamanho, 100) != HAL_OK)
     {
       i++;
-      *Status_Message = TIMEOUT;
     }
     else
     {
-      if((*Status = COM_Protocol_Check_Menssage(Message_To_Communication, tamanho)) != OK)
+      if((*Status_Message = COM_Protocol_Check_Menssage(Message_To_Communication, tamanho)) != OK)
       {
         i++;
-      }
-      else
-      {
-        *Status_Message = OK;
       }
     }
   }
@@ -79,27 +80,27 @@ StatusMenssageTypeDef COM_Protocol_Check_Menssage(uint8_t *data, uint32_t length
     return ERRO_Length;
   }
   
-  if(CHECKSUM(data, length) != true)                 //Teste da integridade da mensagem
+  else if(CHECKSUM(data, length) != true)                 //Teste da integridade da mensagem
   {
     return ERRO_CHECKSUM;
   }
   
-  if(data[1]== 0xFF)
+  else if(data[1]== 0xFF)
   {
     return ERRO_Length;
   }
   
-  if(data[1]== 0xFE)
+  else if(data[1]== 0xFE)
   {
     return ERRO_CHECKSUM;
   }
   
-  if(data[1]== 0xFD)
+  else if(data[1]== 0xFD)
   {
     return ERRO_EMERGENCY;
   }    
   
-  if(data[1]== 0xFC)
+  else if(data[1]== 0xFC)
   {
     return BUSY;
   }
@@ -125,17 +126,41 @@ bool CHECKSUM(uint8_t *data, uint8_t length)
   }
 }
 
-Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message)
+uint8_t COM_Protocol_Report_Erro(StatusMenssageTypeDef Erro)
+{
+  switch(Erro)
+  {
+  case ERRO_Length:
+    return(0xFF);
+    break;
+    
+  case ERRO_CHECKSUM:
+    return(0xFE);
+    break;
+    
+  case ERRO_EMERGENCY:
+    return(0xFD);
+    break;
+    
+  case BUSY:
+    return(0xFC);
+    break;
+    
+  case TIMEOUT:
+    return(0xFB);
+    break;
+  }
+}
+
+Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[])
 {
   Load Load_Conversion_Aux = {IDLE, 0, 0};
-  uint16_t Value_Conversion_Aux = 0;
   if(Received_Message[0] == 0x06 ){
-    Load_Conversion_Aux.state = CURRENT;
-    Value_Conversion_Aux = Received_Message[2];
-    Value_Conversion_Aux << 8;
-    Value_Conversion_Aux = Value_Conversion_Aux + Received_Message[3];
-    Load_Conversion_Aux.value = Value_Conversion_Aux;
+    Load_Conversion_Aux.state_load = CURRENT;
+    Load_Conversion_Aux.value_state_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
+    Load_Conversion_Aux.time_load_on = Received_Message[4];
     }
+  return Load_Conversion_Aux;  
   /*
   else if(Received_Message == ){
     Returned_Load_State = POTENCY;
@@ -150,4 +175,11 @@ Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message)
     return Returned_Load_State;
   }
   */
+}
+
+uint16_t Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[])
+{
+  uint16_t Value_Conversion_Aux = 0;
+  Value_Conversion_Aux = (((uint16_t) Received_Datas[2] << 8) | Received_Datas[3]);
+  return Value_Conversion_Aux;
 }

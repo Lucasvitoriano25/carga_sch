@@ -1,7 +1,10 @@
 #ifndef __LOAD_STATE_MACHINE_H
 #define __LOAD_STATE_MACHINE_H
 
-#include "stdbool.h"
+#include "main.h"
+#include "Load.h"
+#include "com_protocol.h"
+#include "stm32f3xx_hal.h"
 
 void Load_State_Machine_Init();
 
