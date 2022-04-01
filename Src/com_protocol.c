@@ -180,6 +180,6 @@ Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[])
 uint16_t Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[])
 {
   uint16_t Value_Conversion_Aux = 0;
-  Value_Conversion_Aux = (((uint16_t) Received_Datas[2] << 8) | Received_Datas[3]);
+  Value_Conversion_Aux = (((uint16_t) Received_Datas[3] << 8) | Received_Datas[4]);
   return Value_Conversion_Aux;
 }
