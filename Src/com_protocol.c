@@ -24,8 +24,12 @@ Load *Message_Received)
   *Status_Message  = TIMEOUT;
   
   while((*Status_Message != OK) && i < Attempts)
-  {
-    if (HAL_UART_Receive(&USART_MICRO_COMMUNICATION, Received_UART_Message, tamanho, 100) != HAL_OK)
+  { 
+    __HAL_UART_CLEAR_OREFLAG(&huart1);
+
+    __HAL_UART_CLEAR_NEFLAG(&huart1);
+    
+    if((HAL_UART_Receive(&huart1, Received_UART_Message, sizeof(Received_UART_Message),100)) != HAL_OK)
     {
       i++;
       *Status_Message = TIMEOUT;
@@ -155,7 +159,7 @@ uint8_t COM_Protocol_Report_Erro(StatusMenssageTypeDef Erro)
 Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[])
 {
   Load Load_Conversion_Aux = {IDLE, 0, 0};
-  if(Received_Message[0] == 0x06 ){
+  if(Received_Message[1] == 0x06 ){
     Load_Conversion_Aux.state_load = CURRENT;
     Load_Conversion_Aux.value_state_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
     Load_Conversion_Aux.time_load_on = Received_Message[4];
@@ -177,9 +181,9 @@ Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[])
   */
 }
 
-uint16_t Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[])
+float Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[])
 {
-  uint16_t Value_Conversion_Aux = 0;
+  float Value_Conversion_Aux = 0;
   Value_Conversion_Aux = (((uint16_t) Received_Datas[3] << 8) | Received_Datas[4]);
-  return Value_Conversion_Aux;
+  return (Value_Conversion_Aux * 0.001);
 }

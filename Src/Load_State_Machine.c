@@ -45,17 +45,21 @@ void Load_State_Machine()
   {
     COM_Protocol_Receive_Communication_Control(&Status_Message, &load);
   }
-  if(Status_Message == OK && load.state_load != CURRENT)
-  {  
-    initial_time = HAL_GetTick();
-    SET_CURRENT(load.value_state_load);
-    load.state_load = CURRENT;
-  }
-  else if(HAL_GetTick() - initial_time > load.time_load_on){
+  if(Status_Message == OK && load.state_load == CURRENT)
+  { 
+    if (initial_time == 0)
+    {
+      initial_time = HAL_GetTick();
+      SET_CURRENT(load.value_state_load);
+      load.state_load = CURRENT;
+    }
+    else if(HAL_GetTick() - initial_time > load.time_load_on)
+    {
     TURN_LOAD_OFF();
     load.state_load = IDLE;
+    initial_time = 0 ;
     }
-    
+  }
 }
 
 
