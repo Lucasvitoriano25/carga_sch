@@ -9,7 +9,7 @@
 extern UART_HandleTypeDef huart1;
 uint16_t teste, teste2;
 uint8_t Mensagem[tamanho];
-uint8_t Status_Message_Receiver;
+uint8_t Status_Message_Receiver[tamanho];
 uint8_t Received_UART_Message[tamanho];
 E_Carga_State Returned_Load_State;
 StatusMenssageTypeDef Status_Message_Transceiver;
@@ -25,27 +25,27 @@ Load *Message_Received)
   
   while((*Status_Message != OK) && i < Attempts)
   { 
-    __HAL_UART_CLEAR_OREFLAG(&huart1);
 
-    __HAL_UART_CLEAR_NEFLAG(&huart1);
     
     if((HAL_UART_Receive(&huart1, Received_UART_Message, sizeof(Received_UART_Message),100)) != HAL_OK)
     {
       i++;
       *Status_Message = TIMEOUT;
     }
-    else
+    if(i == Attempts)
     {
       if((*Status_Message = COM_Protocol_Check_Menssage(Received_UART_Message, tamanho)) != OK)
       {
         i++;
-        Status_Message_Receiver = COM_Protocol_Report_Erro(*Status_Message);
-        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, &Status_Message_Receiver);
+        Status_Message_Receiver[2] = COM_Protocol_Report_Erro(*Status_Message);
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Status_Message_Receiver);
+        HAL_Delay(10);
+
       }
       else
       {
-        Status_Message_Receiver = COM_Protocol_Report_Erro(*Status_Message);
-        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, &Status_Message_Receiver);
+        Status_Message_Receiver[2] = COM_Protocol_Report_Erro(*Status_Message);
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Status_Message_Receiver);
         *Message_Received = Convert_Received_Serial_Message_To_Load_State(Received_UART_Message);
       }
     }
@@ -62,7 +62,7 @@ uint8_t  *Message_To_Communication)
   
   while((*Status_Message != OK) && i < Attempts)
   {
-    if (HAL_UART_Transmit(&USART_MICRO_COMMUNICATION, Message_To_Communication, tamanho, 100) != HAL_OK)
+    if (HAL_UART_Transmit(&USART_MICRO_COMMUNICATION, Message_To_Communication, sizeof(Message_To_Communication), 100) != HAL_OK)
     {
       i++;
     }
@@ -108,7 +108,6 @@ StatusMenssageTypeDef COM_Protocol_Check_Menssage(uint8_t *data, uint32_t length
   {
     return BUSY;
   }
-  
   return OK;
 } 
 
@@ -154,31 +153,17 @@ uint8_t COM_Protocol_Report_Erro(StatusMenssageTypeDef Erro)
     return(0xFB);
     break;
   }
+  return 0;
 }
-
 Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[])
 {
   Load Load_Conversion_Aux = {IDLE, 0, 0};
   if(Received_Message[1] == 0x06 ){
     Load_Conversion_Aux.state_load = CURRENT;
     Load_Conversion_Aux.value_state_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
-    Load_Conversion_Aux.time_load_on = Received_Message[4];
+    // se quiser desligar depois de um tempo = Load_Conversion_Aux.time_load_on = Received_Message[4];
     }
   return Load_Conversion_Aux;  
-  /*
-  else if(Received_Message == ){
-    Returned_Load_State = POTENCY;
-    return Returned_Load_State;
-  }
-  else if(Received_Message == ){
-    Returned_Load_State = RESISTANCE;
-    return Returned_Load_State;
-  }
-  else{
-    Returned_Load_State = IDLE;
-    return Returned_Load_State;
-  }
-  */
 }
 
 float Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[])

@@ -13,14 +13,14 @@
     </Stack>
     <StLinkDriver>
         <stlinkserialNo>53231287</stlinkserialNo>
-        <stlinkfoundProbes />
+        <stlinkfoundProbes>53231287:FFFFFFFF:</stlinkfoundProbes>
         <CStepIntDis>_ 0</CStepIntDis>
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
         <stlinkResetStyle>0</stlinkResetStyle>
         <stlinkResetStrategy>3</stlinkResetStrategy>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>1891580364</Checksum>
+        <Checksum>2327034993</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -57,7 +57,7 @@
         <Fmt0>Load-time_load_on	3	0</Fmt0>
     </struct_types>
     <array_types>
-        <Fmt0>uint8_t[8]	3	0</Fmt0>
+        <Fmt0>uint8_t[8]	4	0</Fmt0>
     </array_types>
     <Trace2>
         <Enabled>0</Enabled>
@@ -110,8 +110,9 @@
     <Breakpoints2>
         <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\Load.c}.20.1" 0 0 1 "" 0 "" 0</Bp0>
         <Bp1>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\main.c}.86.1" 0 0 1 "" 0 "" 0</Bp1>
-        <Bp2>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\com_protocol.c}.102.8" 0 0 1 "" 0 "" 0</Bp2>
-        <Count>3</Count>
+        <Bp2>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\com_protocol.c}.67.7" 0 0 1 "" 0 "" 0</Bp2>
+        <Bp3>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\com_protocol.c}.40.9" 0 0 1 "" 0 "" 0</Bp3>
+        <Count>4</Count>
     </Breakpoints2>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>

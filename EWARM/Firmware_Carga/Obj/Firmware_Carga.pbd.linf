@@ -1,29 +1,29 @@
-﻿C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\Firmware_Carga.pbd
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\com_protocol.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\Load.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\LOAD_State_Machine.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\main.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_msp.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_it.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\system_stm32f3xx.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_adc.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_adc_ex.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_cortex.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_dac.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_dac_ex.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_dma.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_exti.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_flash.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_flash_ex.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_gpio.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_i2c.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_i2c_ex.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_pwr.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_pwr_ex.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_rcc.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_rcc_ex.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_tim.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_tim_ex.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_uart.pbi
-C:\Users\Lesc\Desktop\carga_sch_Communication-master\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_uart_ex.pbi
+﻿C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\Firmware_Carga.pbd
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\com_protocol.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\Load.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\LOAD_State_Machine.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\main.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_msp.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_it.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\system_stm32f3xx.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_adc.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_adc_ex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_cortex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_dac.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_dac_ex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_dma.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_exti.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_flash.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_flash_ex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_gpio.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_i2c.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_i2c_ex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_pwr.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_pwr_ex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_rcc.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_rcc_ex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_tim.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_tim_ex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_uart.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_uart_ex.pbi
