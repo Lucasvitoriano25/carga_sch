@@ -42,7 +42,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-typedef enum {
+ typedef enum {
   CURRENT = 0,
   POTENCY,
   RESISTANCE,
@@ -62,6 +62,7 @@ typedef struct {
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
+
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */

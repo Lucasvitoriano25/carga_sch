@@ -1037,7 +1037,7 @@
         <name>$PROJ_DIR$\..\Src\Load.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\Src\Load_State_Machine.c</name>
+        <name>$PROJ_DIR$\..\Src\LOAD_State_Machine.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\Src\main.c</name>

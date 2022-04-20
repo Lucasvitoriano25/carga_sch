@@ -1,21 +1,20 @@
 #include "main.h"
 #include "stm32f3xx_hal.h"
 #include "stdbool.h"
+#include <string.h> 
 
 #include "com_protocol.h"
 #include "com_HA.h"
-//uint8_t mensagem[20];
+//uint8_t message[20];
 
 extern UART_HandleTypeDef huart1;
-uint16_t teste, teste2;
-uint8_t Mensagem[tamanho];
-uint8_t Status_Message_Receiver[tamanho];
-uint8_t Received_UART_Message[tamanho];
-E_Carga_State Returned_Load_State;
-StatusMenssageTypeDef Status_Message_Transceiver;
+
+static uint8_t Status_Message_Receiver[tamanho];
+static uint8_t Received_UART_Message[tamanho];
+static StatusMessageTypeDef Status_Message_Transceiver;
 
 
-void COM_Protocol_Receive_Communication_Control(StatusMenssageTypeDef *Status_Message, 
+void COM_Protocol_Receive_Communication_Control(StatusMessageTypeDef *Status_Message, 
 Load *Message_Received)
 {
   #define Attempts 3
@@ -26,33 +25,31 @@ Load *Message_Received)
   while((*Status_Message != OK) && i < Attempts)
   { 
 
-    
-    if((HAL_UART_Receive(&huart1, Received_UART_Message, sizeof(Received_UART_Message),100)) != HAL_OK)
-    {
+    if((HAL_UART_Receive(&USART_MICRO_COMMUNICATION, Received_UART_Message, tamanho,100)) != HAL_OK)
+    {    
       i++;
       *Status_Message = TIMEOUT;
+      COM_Protocol_Reset_Serial();
     }
-    if(i == Attempts)
+    else
     {
-      if((*Status_Message = COM_Protocol_Check_Menssage(Received_UART_Message, tamanho)) != OK)
+      if((*Status_Message = COM_Protocol_Check_Message(Received_UART_Message, tamanho)) != OK)
       {
-        i++;
         Status_Message_Receiver[2] = COM_Protocol_Report_Erro(*Status_Message);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Status_Message_Receiver);
-        HAL_Delay(10);
-
+        COM_Protocol_Reset_Serial();
       }
       else
       {
-        Status_Message_Receiver[2] = COM_Protocol_Report_Erro(*Status_Message);
-        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Status_Message_Receiver);
+        memcpy(Status_Message_Receiver, Received_UART_Message, sizeof(Received_UART_Message));
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Received_UART_Message);
         *Message_Received = Convert_Received_Serial_Message_To_Load_State(Received_UART_Message);
       }
     }
   }
 }
 
-void COM_Protocol_Transceiver_Communication_Control(StatusMenssageTypeDef *Status_Message, 
+void COM_Protocol_Transceiver_Communication_Control(StatusMessageTypeDef *Status_Message, 
 uint8_t  *Message_To_Communication)
 {
   #define Attempts 3
@@ -62,29 +59,26 @@ uint8_t  *Message_To_Communication)
   
   while((*Status_Message != OK) && i < Attempts)
   {
-    if (HAL_UART_Transmit(&USART_MICRO_COMMUNICATION, Message_To_Communication, sizeof(Message_To_Communication), 100) != HAL_OK)
+    if ((HAL_UART_Transmit(&USART_MICRO_COMMUNICATION, Message_To_Communication, tamanho,10)) != HAL_OK)
     {
       i++;
     }
     else
     {
-      if((*Status_Message = COM_Protocol_Check_Menssage(Message_To_Communication, tamanho)) != OK)
-      {
-        i++;
-      }
+      *Status_Message  = OK;
     }
   }
 }
 
 
-StatusMenssageTypeDef COM_Protocol_Check_Menssage(uint8_t *data, uint32_t length)
+StatusMessageTypeDef COM_Protocol_Check_Message(uint8_t *data, uint32_t length)
 {
   if(length != 8)                                   //Recebido com numero incorreto de bytes
   {
     return ERRO_Length;
   }
   
-  else if(CHECKSUM(data, length) != true)                 //Teste da integridade da mensagem
+  else if(CHECKSUM(data, length) != true)                 //Teste da integridade da message
   {
     return ERRO_CHECKSUM;
   }
@@ -129,7 +123,7 @@ bool CHECKSUM(uint8_t *data, uint8_t length)
   }
 }
 
-uint8_t COM_Protocol_Report_Erro(StatusMenssageTypeDef Erro)
+uint8_t COM_Protocol_Report_Erro(StatusMessageTypeDef Erro)
 {
   switch(Erro)
   {
@@ -155,6 +149,18 @@ uint8_t COM_Protocol_Report_Erro(StatusMenssageTypeDef Erro)
   }
   return 0;
 }
+
+void COM_Protocol_Reset_Serial()
+{
+ uint8_t dump[tamanho] = {0}; 
+ 
+ HAL_UART_Receive(&USART_MICRO_COMMUNICATION, dump, tamanho, 0);
+
+ HAL_UART_DeInit(&USART_MICRO_COMMUNICATION);
+
+ HAL_UART_Init(&USART_MICRO_COMMUNICATION);
+}
+
 Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[])
 {
   Load Load_Conversion_Aux = {IDLE, 0, 0};
