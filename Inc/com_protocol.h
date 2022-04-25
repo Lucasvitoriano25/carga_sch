@@ -52,4 +52,12 @@ void COM_Protocol_Reset_Serial();
 
 uint8_t COM_Protocol_Report_Erro(StatusMessageTypeDef Erro);
 
+void Convert_Load_Type_To_Serial_Message(Load load_to_be_converted, uint8_t *Message_Converted);
+
+float Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[]);
+
+void Convert_float_to_2_uint8(float message_to_be_converted, uint8_t *LSB,uint8_t *MSB);
+
+
+
 #endif /* __COM_PROTOCOL_H */

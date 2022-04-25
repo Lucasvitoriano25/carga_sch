@@ -10,8 +10,7 @@
 #include "stm32f3xx_hal.h"
 #include "stdbool.h"
 
-
-uint16_t ADC_VALUES[2];
+extern uint16_t ADC_VALUES[];
     
 extern ADC_HandleTypeDef hadc1;
 extern DMA_HandleTypeDef hdma_adc1;
@@ -22,13 +21,13 @@ extern TIM_HandleTypeDef htim1;
 
 
 static float I_To_AD_Converter = 1363.64; 
-static float AD_to_I_Converter = ((3.3/4096)/(0.1));
+static float AD_To_I_Converter = ((3.3/4095)/(0.1));
 static float AD_To_Tension_Converter = 0.017;
 
 
 
 /* USER CODE BEGIN PFP */
-void Carga_Init();
+void Load_Init();
 void SET_CURRENT(float value);
 void SET_POTENCY(float potency);
 void SET_RESISTANCE(float resistance);
@@ -36,14 +35,11 @@ void SET_RESISTANCE(float resistance);
 
 void Load_Init()
 {
-  HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
-  HAL_TIM_Base_Start(&htim1);
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADC_VALUES, 2); 
   SET_CURRENT(0);
 }
 
 void SET_CURRENT(float Value){
-  if(value < 3){
+  if(Value < 3){
     int Ad_Value;
     
     Ad_Value = Value * I_To_AD_Converter;
@@ -52,6 +48,7 @@ void SET_CURRENT(float Value){
     HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
   }
   else
+  {} 
   //Value bigger than dac max value in Volts of micro
 }
 
@@ -82,7 +79,7 @@ void TURN_LOAD_OFF(){
   HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
   }
 
-int GET_CURRENT_SETED()
+float GET_CURRENT_SETED()
 {
-  return ADC_VALUES[0]*AD_To_Tension_Converter;
+  return ADC_VALUES[0]*AD_To_I_Converter;
 }

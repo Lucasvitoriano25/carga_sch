@@ -22,7 +22,7 @@
 /**
 
   ******************************************************************************
-   *CORRENTE Mï¿½XIMA LIMITADA PELO DAC = 3.3 A
+   *CORRENTE MÁXIMA LIMITADA PELO DAC = 3.3 A
   ******************************************************************************
 
 */
@@ -34,7 +34,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdbool.h"
 
 /* USER CODE END Includes */
 
@@ -64,6 +63,11 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
+uint32_t value = 0; 
+float I_To_AD_Converter = 1363.64; 
+float AD_To_Tension_Converter = 0.017;
+uint32_t last_lcd_update = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -75,19 +79,20 @@ static void MX_DMA_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_TIM1_Init(void);
 /* USER CODE BEGIN PFP */
+void SET_CURRENT(float value);
+void SET_POTENCY(uint16_t TensionAD_Value, float potency);
+void SET_RESISTANCE(uint16_t TensionAD_Value, float resistance);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-E_Carga_State Carga_State = CURRENT;
-
-uint16_t ADC_VALUES[2];
-
-float current_Value_A = 0.25;
-float potency_Value_W = 0;
-float resistance_Value_Ohms = 0;
-
+  uint16_t ADC_VALUES[2];
+  
+  E_Carga_State Carga_State;
+  
+  float setcurrent_A = 0.20;
+  float setpotency_W = 0;
+  float setresistance_Ohms = 0;
 /* USER CODE END 0 */
 
 /**
@@ -97,6 +102,7 @@ float resistance_Value_Ohms = 0;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -124,32 +130,43 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  
   HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
   HAL_TIM_Base_Start(&htim1);
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADC_VALUES, 2); 
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*) ADC_VALUES, 2);
+    
+  SET_CURRENT(0.20);
   
-  Load_State_Machine_Init();
-
+  
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {  
-    /* PARA DEBUG IAR*/
-    /* 
-    Load_State_Machine(Carga_State);
-
-    set_Current_Value(current_Value_A);
-
-    set_Potency_Value(potency_Value_W);
-
-    set_Resistance_Value(resistance_Value_Ohms);
-    */
-    
-    Load_State_Machine();
-
+    switch(Carga_State){
+      
+      case CURRENT:
+        SET_CURRENT(setcurrent_A);
+        break;
+        
+      case POTENCY:
+        SET_POTENCY(ADC_VALUES[1], setpotency_W);
+        break;
+        
+      case RESISTANCE:
+         SET_RESISTANCE(ADC_VALUES[1], setresistance_Ohms);
+        break;
+        
+    }
+    /*if ((HAL_GetTick() - last_lcd_update) > 30000) {
+      set_current_state = 0;
+      set_potency_state = 0;
+      set_resistance_state = 0;
+      SET_CURRENT(0);
+      last_lcd_update = HAL_GetTick();
+      
+    }*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -377,7 +394,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 9600;
+  huart1.Init.BaudRate = 38400;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -428,7 +445,37 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void SET_CURRENT(float Value){
+  
+  int Ad_Value;
+  
+  Ad_Value = Value * I_To_AD_Converter;
+  
+  HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, Ad_Value);
+  HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
+}
 
+void SET_POTENCY(uint16_t TensionAD_Value, float potency){
+   
+  float Current_Value;
+  float Tension_Value;
+    
+  Tension_Value = TensionAD_Value * AD_To_Tension_Converter;
+  Current_Value = potency/Tension_Value;
+    
+  SET_CURRENT(Current_Value);
+}
+
+void SET_RESISTANCE(uint16_t TensionAD_Value, float resistance){
+   
+  float Tension_Value;
+  float Current_Value;
+    
+  Tension_Value = (float)(TensionAD_Value) * AD_To_Tension_Converter;
+  Current_Value = Tension_Value/resistance;
+    
+  SET_CURRENT(Current_Value);
+}
 /* USER CODE END 4 */
 
 /**

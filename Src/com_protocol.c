@@ -25,7 +25,7 @@ Load *Message_Received)
   while((*Status_Message != OK) && i < Attempts)
   { 
 
-    if((HAL_UART_Receive(&USART_MICRO_COMMUNICATION, Received_UART_Message, tamanho,100)) != HAL_OK)
+    if((HAL_UART_Receive(&USART_MICRO_COMMUNICATION, Received_UART_Message, tamanho,200)) != HAL_OK)
     {    
       i++;
       *Status_Message = TIMEOUT;
@@ -42,7 +42,6 @@ Load *Message_Received)
       else
       {
         memcpy(Status_Message_Receiver, Received_UART_Message, sizeof(Received_UART_Message));
-        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Received_UART_Message);
         *Message_Received = Convert_Received_Serial_Message_To_Load_State(Received_UART_Message);
       }
     }
@@ -161,7 +160,7 @@ void COM_Protocol_Reset_Serial()
  HAL_UART_Init(&USART_MICRO_COMMUNICATION);
 }
 
-Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[])
+Load Convert_Received_Serial_Message_To_Load_State(uint8_t *Received_Message)
 {
   Load Load_Conversion_Aux = {IDLE, 0, 0};
   if(Received_Message[1] == 0x06 ){
@@ -172,9 +171,34 @@ Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[])
   return Load_Conversion_Aux;  
 }
 
+void Convert_Load_Type_To_Serial_Message(Load load_to_be_converted, uint8_t *Message_Converted)
+{
+  if(load_to_be_converted.state_load == CURRENT)
+  {
+    uint8_t MSB = 0;
+    uint8_t LSB = 0;
+    Message_Converted[1] = 6;
+    Convert_float_to_2_uint8(load_to_be_converted.value_state_load,&LSB,&MSB);
+    Message_Converted[3] = MSB;
+    Message_Converted[4] = LSB;
+    Message_Converted[7] =  Message_Converted[6] + Message_Converted[5] + Message_Converted[4] + Message_Converted[3] +
+      Message_Converted[2]+ Message_Converted[1]+ Message_Converted[0];
+    
+    
+  }
+}
+
 float Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[])
 {
   float Value_Conversion_Aux = 0;
   Value_Conversion_Aux = (((uint16_t) Received_Datas[3] << 8) | Received_Datas[4]);
   return (Value_Conversion_Aux * 0.001);
+}
+
+void Convert_float_to_2_uint8(float message_to_be_converted, uint8_t *LSB,uint8_t *MSB)
+{
+  uint16_t aux =0;
+  aux = (uint16_t) (message_to_be_converted*1000);
+  *LSB = (uint8_t) aux; // Get lower byte of 16-bit var
+  *MSB = (uint8_t)(aux >> 8); // Get upper byte of 16-bit var
 }

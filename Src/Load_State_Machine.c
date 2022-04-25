@@ -13,9 +13,11 @@
 
 /* USER CODE BEGIN PV */
 static StatusMessageTypeDef Status_Message;
+static StatusMessageTypeDef Status_Message_Transceiver;
 static Load load = {IDLE, 0, 0};
 static uint32_t original_time = 0; 
 static uint32_t initial_time = 0;
+static uint8_t Message_To_Communication[8] = {0};
 /* USER CODE END PV */
 
 /* USER CODE BEGIN PFP */
@@ -39,7 +41,6 @@ void Load_State_Machine_Init()
   potency_W = 0;
   resistance_Ohms = 0;
   original_time = HAL_GetTick();
-  //SET_CURRENT(current_A);
   Load_Init();
 }
 /* Para debug no IAR void Load_State_Machine(E_Carga_State Carga_State){ */
@@ -47,15 +48,22 @@ void Load_State_Machine()
 {
   COM_Protocol_Receive_Communication_Control(&Status_Message, &load);
   
-  if( (Status_Message == OK && load.state_load == IDLE) || ((HAL_GetTick() - initial_time) > 6000) )
-  {                                                                                        
+  if( (Status_Message == OK && load.state_load == IDLE) || ((HAL_GetTick() - initial_time) > 60000) )
+  {        
+      initial_time = HAL_GetTick();
       TURN_LOAD_OFF();
       load.state_load = IDLE;
   }    
   else if(Status_Message == OK && load.state_load == CURRENT)
-  {  
-     initial_time = HAL_GetTick();
-     SET_CURRENT(load.value_state_load);
+  {      
+    SET_CURRENT(load.value_state_load);
+    initial_time = HAL_GetTick();
+    HAL_Delay(1);
+    if(GET_CURRENT_SETED() > 0.5*load.value_state_load && GET_CURRENT_SETED() < 1.5*load.value_state_load)
+   { 
+      Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+      COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+    }
   }
 }
 

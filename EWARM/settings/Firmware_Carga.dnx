@@ -14,13 +14,13 @@
     <StLinkDriver>
         <stlinkserialNo>53231287</stlinkserialNo>
         <stlinkfoundProbes />
-        <stlinkResetStyle>0</stlinkResetStyle>
-        <stlinkResetStrategy>3</stlinkResetStrategy>
         <CStepIntDis>_ 0</CStepIntDis>
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
+        <stlinkResetStyle>1</stlinkResetStyle>
+        <stlinkResetStrategy>3</stlinkResetStrategy>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>2712990624</Checksum>
+        <Checksum>1114539710</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -58,7 +58,8 @@
         <Fmt0>Load-time_load_on	3	0</Fmt0>
     </struct_types>
     <array_types>
-        <Fmt0>uint8_t[8]	3	0</Fmt0>
+        <Fmt0>uint8_t[2]	3	0</Fmt0>
+        <Fmt1>uint8_t[8]	3	0</Fmt1>
     </array_types>
     <Trace2>
         <Enabled>0</Enabled>
@@ -105,6 +106,18 @@
         <ShowTimeSum>1</ShowTimeSum>
         <SumSortOrder>0</SumSortOrder>
     </EventLog>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Bp0>_ 0 "EMUL_CODE" "{C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando}.20.1" 0 0 1 "" 0 "" 0</Bp0>
+        <Bp1>_ 0 "EMUL_CODE" "{C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando}.86.1" 0 0 1 "" 0 "" 0</Bp1>
+        <Bp2>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\stm32f3xx_it.c}.0.1" 0 0 1 "" 0 "" 0</Bp2>
+        <Bp3>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\com_protocol.c}.193.9" 0 0 1 "" 0 "" 0</Bp3>
+        <Bp4>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\LOAD_State_Machine.c}.68.1" 0 0 1 "" 0 "" 0</Bp4>
+        <Bp5>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\com_protocol.c}.36.7" 0 0 1 "" 0 "" 0</Bp5>
+        <Count>6</Count>
+    </Breakpoints2>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
@@ -114,6 +127,12 @@
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
     </TermIOLog>
+    <Aliases>
+        <A0>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c" ""</A0>
+        <A1>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Src\main.c" ""</A1>
+        <Count>2</Count>
+        <SuppressDialog>1</SuppressDialog>
+    </Aliases>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>3</Mode>
@@ -127,20 +146,4 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints2>
-        <Bp0>_ 0 "EMUL_CODE" "{C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando}.20.1" 0 0 1 "" 0 "" 0</Bp0>
-        <Bp1>_ 0 "EMUL_CODE" "{C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando}.86.1" 0 0 1 "" 0 "" 0</Bp1>
-        <Bp2>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\com_protocol.c}.36.7" 0 0 1 "" 0 "" 0</Bp2>
-        <Bp3>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\com_protocol.c}.44.9" 0 0 1 "" 0 "" 0</Bp3>
-        <Count>4</Count>
-    </Breakpoints2>
-    <Aliases>
-        <A0>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c" ""</A0>
-        <A1>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Src\main.c" ""</A1>
-        <Count>2</Count>
-        <SuppressDialog>1</SuppressDialog>
-    </Aliases>
 </settings>
