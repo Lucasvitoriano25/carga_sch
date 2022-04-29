@@ -39,8 +39,8 @@ void Load_Init()
 }
 
 void SET_CURRENT(float Value){
-  if(Value < 3){
-    int Ad_Value;
+  if(Value < 3.3){
+    int Ad_Value = 0;
     
     Ad_Value = Value * I_To_AD_Converter;
     
@@ -54,8 +54,8 @@ void SET_CURRENT(float Value){
 
 void SET_POTENCY(float potency){
    
-  float Current_Value;
-  float Tension_Value;
+  float Current_Value = 0;
+  float Tension_Value = 0;
     
   Tension_Value = ADC_VALUES[1] * AD_To_Tension_Converter;
   Current_Value = potency/Tension_Value;
@@ -65,8 +65,8 @@ void SET_POTENCY(float potency){
 
 void SET_RESISTANCE(float resistance){
    
-  float Tension_Value;
-  float Current_Value;
+  float Tension_Value = 0;
+  float Current_Value = 0;
     
   Tension_Value = (float)(ADC_VALUES[1]) * AD_To_Tension_Converter;
   Current_Value = Tension_Value/resistance;
@@ -81,5 +81,33 @@ void TURN_LOAD_OFF(){
 
 float GET_CURRENT_SETED()
 {
-  return ADC_VALUES[0]*AD_To_I_Converter;
+  float Current_Value = 0;
+  Current_Value = ADC_VALUES[0] * AD_To_I_Converter;
+
+  return Current_Value;
+}
+
+float GET_POTENCY_SETED()
+{
+  float Current_Value = 0;
+  float Tension_Value = 0;
+  float Potency_Value = 0;
+  Tension_Value = ADC_VALUES[1] * AD_To_Tension_Converter;
+  Current_Value = ADC_VALUES[0] * AD_To_I_Converter;
+  Potency_Value = Current_Value * Tension_Value;
+  
+  return Potency_Value;
+}
+
+float GET_RESISTANCE_SETED()
+{
+  float Tension_Value = 0;
+  float Current_Value = 0;
+  float Resistance_Value = 0;
+    
+  Tension_Value = ADC_VALUES[1] * AD_To_Tension_Converter;
+  Current_Value = ADC_VALUES[0] * AD_To_I_Converter;
+  Resistance_Value = Tension_Value/Current_Value;
+
+  return Resistance_Value;
 }

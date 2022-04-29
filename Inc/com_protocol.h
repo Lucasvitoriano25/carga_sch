@@ -58,6 +58,12 @@ float Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[]);
 
 void Convert_float_to_2_uint8(float message_to_be_converted, uint8_t *LSB,uint8_t *MSB);
 
+int Convert_Load_Type_To_uint8(Load load_to_be_converted);
 
+void Create_Checksum(uint8_t * vector);
+
+void Create_Error_Message(uint8_t * error_message, StatusMessageTypeDef *data);
+
+void Error_Setting_Value(uint8_t * error_message);
 
 #endif /* __COM_PROTOCOL_H */

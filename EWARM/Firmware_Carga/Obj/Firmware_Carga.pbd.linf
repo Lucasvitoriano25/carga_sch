@@ -3,9 +3,6 @@ C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Car
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\Load.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\LOAD_State_Machine.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\main.pbi
-C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_msp.pbi
-C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_it.pbi
-C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\system_stm32f3xx.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_adc.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_adc_ex.pbi
@@ -19,6 +16,7 @@ C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Car
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_gpio.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_i2c.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_i2c_ex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_msp.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_pwr.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_pwr_ex.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_rcc.pbi
@@ -27,3 +25,5 @@ C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Car
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_tim_ex.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_uart.pbi
 C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_hal_uart_ex.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\stm32f3xx_it.pbi
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM\Firmware_Carga\Obj\system_stm32f3xx.pbi
