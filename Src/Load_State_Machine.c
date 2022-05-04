@@ -60,13 +60,13 @@ void Load_State_Machine()
     initial_time = HAL_GetTick();
     HAL_Delay(1);
     if( Status_Message == OK && ((GET_CURRENT_SETED() - 2 * 0.008058) < load.value_state_load && (GET_CURRENT_SETED() + 2 * 0.008058) > load.value_state_load))
-   { 
+    {  
       Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
     }
    else if(Status_Message == OK)
     {
-      Error_Setting_Value(Message_To_Communication);
+      Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
     }
   }
@@ -82,7 +82,7 @@ void Load_State_Machine()
    }
    else if(Status_Message == OK)
     {
-      Error_Setting_Value(Message_To_Communication);
+      Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
     }
   }
@@ -98,7 +98,7 @@ void Load_State_Machine()
     }
     else if(Status_Message == OK)
     {
-      Error_Setting_Value(Message_To_Communication);
+      Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
     }
   }

@@ -54,6 +54,19 @@ typedef struct {
   float value_state_load;
   uint8_t time_load_on;
 } Load;
+
+typedef enum
+{
+  OK = 0,
+  ERRO_Length,
+  ERRO_CHECKSUM,
+  ERRO_EMERGENCY,
+  BUSY,
+  TIMEOUT,
+  OUTRANGE_VALUE,
+  INCONSISTENCY_IN_SETED_MODE
+} StatusMessageTypeDef;
+
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

@@ -12,6 +12,7 @@ extern UART_HandleTypeDef huart1;
 static uint8_t Status_Message_Receiver[tamanho];
 static uint8_t Received_UART_Message[tamanho];
 static StatusMessageTypeDef Status_Message_Transceiver;
+static uint8_t Message_To_Communication[8] = {0};
 
 
 void COM_Protocol_Receive_Communication_Control(StatusMessageTypeDef *Status_Message, 
@@ -169,17 +170,22 @@ Load Convert_Received_Serial_Message_To_Load_State(uint8_t *Received_Message)
       Load_Conversion_Aux.value_state_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
       // se quiser desligar depois de um tempo = Load_Conversion_Aux.time_load_on = Received_Message[4];
       }
-    if(Received_Message[2] == 2){
+    else if(Received_Message[2] == 2){
       Load_Conversion_Aux.state_load = POTENCY;
       Load_Conversion_Aux.value_state_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
       // se quiser desligar depois de um tempo = Load_Conversion_Aux.time_load_on = Received_Message[4];
       }
-    if(Received_Message[2] == 3){
+    else if(Received_Message[2] == 3){
       Load_Conversion_Aux.state_load = RESISTANCE;
       Load_Conversion_Aux.value_state_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
       // se quiser desligar depois de um tempo = Load_Conversion_Aux.time_load_on = Received_Message[4];
       }
+    else
+    {
+      Error_Setting_Value(Message_To_Communication, INCONSISTENCY_IN_SETED_MODE);
+      COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
     }
+  }
   return Load_Conversion_Aux;  
 }
 
@@ -238,10 +244,17 @@ void Create_Checksum(uint8_t * vector)
   
 }
 
-void Error_Setting_Value(uint8_t * error_message)
+void Error_Setting_Value(uint8_t * error_message,StatusMessageTypeDef Error_Type)
 {
   memset(error_message, 0, sizeof error_message);
-  error_message[2] = 0xFA;
+  if(Error_Type == OUTRANGE_VALUE){
+    error_message[2] = 0xFA;
+  }
+  if(Error_Type == INCONSISTENCY_IN_SETED_MODE)
+  {
+    error_message[2] = 0xF9;
+
+  }    
   Create_Checksum(error_message);
 
 }

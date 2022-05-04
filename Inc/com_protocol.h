@@ -12,15 +12,7 @@ typedef enum
   LerADHipot,
 } ComandoTypeDef;
 
-typedef enum
-{
-  OK = 0,
-  ERRO_Length,
-  ERRO_CHECKSUM,
-  ERRO_EMERGENCY,
-  BUSY,
-  TIMEOUT,
-} StatusMessageTypeDef;
+
 
 typedef struct
 {
@@ -64,6 +56,6 @@ void Create_Checksum(uint8_t * vector);
 
 void Create_Error_Message(uint8_t * error_message, StatusMessageTypeDef *data);
 
-void Error_Setting_Value(uint8_t * error_message);
+void Error_Setting_Value(uint8_t * error_message, StatusMessageTypeDef Error_Type);
 
 #endif /* __COM_PROTOCOL_H */
