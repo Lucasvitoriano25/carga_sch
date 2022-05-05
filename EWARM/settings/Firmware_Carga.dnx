@@ -12,12 +12,12 @@
         <ByteLimit>50</ByteLimit>
     </Stack>
     <StLinkDriver>
+        <stlinkserialNo>56330187</stlinkserialNo>
+        <stlinkfoundProbes />
         <CStepIntDis>_ 0</CStepIntDis>
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
         <stlinkResetStyle>1</stlinkResetStyle>
         <stlinkResetStrategy>3</stlinkResetStrategy>
-        <stlinkserialNo>56330187</stlinkserialNo>
-        <stlinkfoundProbes />
     </StLinkDriver>
     <DebugChecksum>
         <Checksum>2621785600</Checksum>
@@ -128,6 +128,10 @@
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+    </TermIOLog>
     <Aliases>
         <A0>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c" ""</A0>
         <A1>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Src\main.c" ""</A1>
@@ -147,8 +151,4 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
-    <TermIOLog>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-    </TermIOLog>
 </settings>
