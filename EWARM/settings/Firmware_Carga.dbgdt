@@ -135,7 +135,7 @@
                     <item>Status_Message_Receiver</item>
                     <item>load</item>
                     <item>Status_Message</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

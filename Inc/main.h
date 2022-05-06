@@ -49,6 +49,11 @@ extern "C" {
   IDLE
 } E_Carga_State;
 
+ typedef enum {
+  OFF = 0,
+  ON
+} Security_Time_State;
+
 typedef struct {
   E_Carga_State state_load;
   float value_state_load;
@@ -86,6 +91,7 @@ void Error_Handler(void);
 #define ADC_CURRENT_GPIO_Port GPIOA
 #define ADC_VOLTAGE_Pin GPIO_PIN_1
 #define ADC_VOLTAGE_GPIO_Port GPIOA
+#define AD_To_mA 8.058608
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

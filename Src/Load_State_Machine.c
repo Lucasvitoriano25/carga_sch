@@ -59,10 +59,12 @@ void Load_State_Machine()
     SET_CURRENT(load.value_state_load);
     initial_time = HAL_GetTick();
     HAL_Delay(1);
-    if( Status_Message == OK && ((GET_CURRENT_SETED() - 2 * 0.008058) < load.value_state_load && (GET_CURRENT_SETED() + 2 * 0.008058) > load.value_state_load))
-    {  
-      Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
-      COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+    if( Status_Message == OK){
+      if((GET_CURRENT_SETED() - AD_To_mA) < load.value_state_load && (GET_CURRENT_SETED() + AD_To_mA) > load.value_state_load)
+      {  
+        Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+      }
     }
    else if(Status_Message == OK)
     {
@@ -75,11 +77,14 @@ void Load_State_Machine()
     SET_POTENCY(load.value_state_load);
     initial_time = HAL_GetTick();
     HAL_Delay(2);
-    if( Status_Message == OK && (GET_POTENCY_SETED() < 2* load.value_state_load && GET_POTENCY_SETED()  > 0.5 * load.value_state_load))
-   { 
+    if( Status_Message == OK)
+    {
+      if(GET_POTENCY_SETED() < 2* load.value_state_load && GET_POTENCY_SETED()  > 0.5 * load.value_state_load)
+      {
       Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
-   }
+      }
+    }
    else if(Status_Message == OK)
     {
       Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
@@ -91,10 +96,13 @@ void Load_State_Machine()
     SET_RESISTANCE(load.value_state_load);
     initial_time = HAL_GetTick();
     HAL_Delay(2);
-    if( Status_Message == OK && (GET_RESISTANCE_SETED() < 2 * load.value_state_load && GET_RESISTANCE_SETED() > 0.5 * load.value_state_load))
-   { 
+    if( Status_Message == OK)
+    {
+      if(GET_RESISTANCE_SETED() < 2 * load.value_state_load && GET_RESISTANCE_SETED() > 0.5 * load.value_state_load)
+      { 
       Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+      }
     }
     else if(Status_Message == OK)
     {

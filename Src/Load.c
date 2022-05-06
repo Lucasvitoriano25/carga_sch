@@ -111,3 +111,4 @@ float GET_RESISTANCE_SETED()
 
   return Resistance_Value;
 }
+
