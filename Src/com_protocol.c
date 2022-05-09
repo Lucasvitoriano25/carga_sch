@@ -43,7 +43,7 @@ Load *Message_Received)
       else
       {
         memcpy(Status_Message_Receiver, Received_UART_Message, sizeof(Received_UART_Message));
-        *Message_Received = Convert_Received_Serial_Message_To_Load_State(Received_UART_Message);
+        Convert_Received_Serial_Message_To_Load_State(Received_UART_Message, Message_Received);
       }
     }
   }
@@ -161,32 +161,43 @@ void COM_Protocol_Reset_Serial()
  HAL_UART_Init(&USART_MICRO_COMMUNICATION);
 }
 
-Load Convert_Received_Serial_Message_To_Load_State(uint8_t *Received_Message)
+void Convert_Received_Serial_Message_To_Load_State(uint8_t *Received_Message, Load * Load_Conversion_Aux)
 {
-  Load Load_Conversion_Aux = {IDLE, 0, 0};
-  if(Received_Message[1] == 0x06 ){
-    if(Received_Message[2] == 1){
-      Load_Conversion_Aux.state_load = CURRENT;
-      Load_Conversion_Aux.value_state_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
+  if(Received_Message[1] == 0x06 )
+  {
+    if(Received_Message[2] == 1)
+    {
+     (Load_Conversion_Aux -> state_load) = CURRENT;
+      Load_Conversion_Aux -> value_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
       // se quiser desligar depois de um tempo = Load_Conversion_Aux.time_load_on = Received_Message[4];
+    }
+    else if(Received_Message[2] == 2)
+    {
+      Load_Conversion_Aux -> state_load = POTENCY;
+      Load_Conversion_Aux -> value_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
+     }
+    else if(Received_Message[2] == 3)
+    {
+      Load_Conversion_Aux -> state_load = RESISTANCE;
+      Load_Conversion_Aux -> value_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
       }
-    else if(Received_Message[2] == 2){
-      Load_Conversion_Aux.state_load = POTENCY;
-      Load_Conversion_Aux.value_state_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
-      // se quiser desligar depois de um tempo = Load_Conversion_Aux.time_load_on = Received_Message[4];
+    else if(Received_Message[2] == 4)
+    {
+      Load_Conversion_Aux -> state_load = ALTERATING_TIME_ON;
+      if(Received_Message[6] == 1)
+      {
+        (Load_Conversion_Aux -> security_time_state) = !(Load_Conversion_Aux -> security_time_state) ;
+      }   
+      else{
+      Load_Conversion_Aux -> time_load_on = 1000 * Convert_Data1_And_Data2_to_uint16_t(Received_Message); 
       }
-    else if(Received_Message[2] == 3){
-      Load_Conversion_Aux.state_load = RESISTANCE;
-      Load_Conversion_Aux.value_state_load = Convert_Data1_And_Data2_to_uint16_t(Received_Message);
-      // se quiser desligar depois de um tempo = Load_Conversion_Aux.time_load_on = Received_Message[4];
-      }
+    } 
     else
     {
       Error_Setting_Value(Message_To_Communication, INCONSISTENCY_IN_SETED_MODE);
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
     }
   }
-  return Load_Conversion_Aux;  
 }
 
 void Convert_Load_Type_To_Serial_Message(Load load_to_be_converted, uint8_t *Message_Converted)
@@ -195,9 +206,14 @@ void Convert_Load_Type_To_Serial_Message(Load load_to_be_converted, uint8_t *Mes
   uint8_t LSB = 0;
   Message_Converted[1] = 6;
   Message_Converted[2] = Convert_Load_Type_To_uint8(load_to_be_converted);
-  Convert_float_to_2_uint8(load_to_be_converted.value_state_load,&LSB,&MSB);
+  Convert_float_to_2_uint8(load_to_be_converted.value_load,&LSB,&MSB);
   Message_Converted[3] = MSB;
   Message_Converted[4] = LSB;
+  Message_Converted[5] = load_to_be_converted.security_time_state;
+  if(Message_Converted[5] == 4)
+  {
+    Message_Converted[6] = load_to_be_converted.security_time_state;
+  } 
   Create_Checksum(Message_Converted);
 }
 
@@ -219,14 +235,21 @@ void Convert_float_to_2_uint8(float message_to_be_converted, uint8_t *LSB,uint8_
 int Convert_Load_Type_To_uint8(Load load_to_be_converted)
 { 
   int converted_value = 0;
-  if(load_to_be_converted.state_load == CURRENT){
+  if(load_to_be_converted.state_load == CURRENT)
+  {
     converted_value = 1;
   }
-  else if(load_to_be_converted.state_load == POTENCY){
+  else if(load_to_be_converted.state_load == POTENCY)
+  {
     converted_value = 2;
   }
-  else if(load_to_be_converted.state_load == RESISTANCE){
+  else if(load_to_be_converted.state_load == RESISTANCE)
+  {
     converted_value = 3;
+  }
+  else if(load_to_be_converted.state_load == ALTERATING_TIME_ON)
+  {
+    converted_value = 4;
   }
   return converted_value;
 }
@@ -247,7 +270,8 @@ void Create_Checksum(uint8_t * vector)
 void Error_Setting_Value(uint8_t * error_message,StatusMessageTypeDef Error_Type)
 {
   memset(error_message, 0, sizeof error_message);
-  if(Error_Type == OUTRANGE_VALUE){
+  if(Error_Type == OUTRANGE_VALUE)
+  {
     error_message[2] = 0xFA;
   }
   if(Error_Type == INCONSISTENCY_IN_SETED_MODE)

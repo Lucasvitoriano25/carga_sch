@@ -46,18 +46,20 @@ extern "C" {
   CURRENT = 0,
   POTENCY,
   RESISTANCE,
+  ALTERATING_TIME_ON,
   IDLE
 } E_Carga_State;
 
  typedef enum {
   OFF = 0,
-  ON
+  ON = 1
 } Security_Time_State;
 
 typedef struct {
   E_Carga_State state_load;
-  float value_state_load;
-  uint8_t time_load_on;
+  float value_load;
+  uint16_t time_load_on;
+  Security_Time_State security_time_state;
 } Load;
 
 typedef enum

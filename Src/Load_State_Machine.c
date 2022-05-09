@@ -14,7 +14,7 @@
 /* USER CODE BEGIN PV */
 static StatusMessageTypeDef Status_Message;
 static StatusMessageTypeDef Status_Message_Transceiver;
-static Load load = {IDLE, 0, 0};
+static Load load = {IDLE, 0, 30000, ON};
 static uint32_t original_time = 0; 
 static uint32_t initial_time = 0;
 static uint8_t Message_To_Communication[8] = {0};
@@ -47,20 +47,22 @@ void Load_State_Machine_Init()
 void Load_State_Machine()
 {
   COM_Protocol_Receive_Communication_Control(&Status_Message, &load);
-  
-  if( (load.state_load == IDLE) || ((HAL_GetTick() - initial_time) > 60000) )
-  {        
-      initial_time = HAL_GetTick();
-      TURN_LOAD_OFF();
-      load.state_load = IDLE;
-  }    
-  else if(Status_Message == OK && load.state_load == CURRENT)
+  if(load.security_time_state) 
+  {
+    if( (load.state_load == IDLE) || ((HAL_GetTick() - initial_time) > load.time_load_on) )
+    {        
+        initial_time = HAL_GetTick();
+        TURN_LOAD_OFF();
+        load.state_load = IDLE;
+    }   
+  } 
+  if(load.state_load == CURRENT)
   {      
-    SET_CURRENT(load.value_state_load);
+    SET_CURRENT(load.value_load);
     initial_time = HAL_GetTick();
     HAL_Delay(1);
     if( Status_Message == OK){
-      if((GET_CURRENT_SETED() - AD_To_mA) < load.value_state_load && (GET_CURRENT_SETED() + AD_To_mA) > load.value_state_load)
+      if((GET_CURRENT_SETED() - AD_To_mA) < load.value_load && (GET_CURRENT_SETED() + AD_To_mA) > load.value_load)
       {  
         Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
@@ -72,17 +74,17 @@ void Load_State_Machine()
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
     }
   }
-    else if( load.state_load == POTENCY)
+  else if( load.state_load == POTENCY)
   {      
-    SET_POTENCY(load.value_state_load);
+    SET_POTENCY(load.value_load);
     initial_time = HAL_GetTick();
     HAL_Delay(2);
     if( Status_Message == OK)
     {
-      if(GET_POTENCY_SETED() < 2* load.value_state_load && GET_POTENCY_SETED()  > 0.5 * load.value_state_load)
+      if(GET_POTENCY_SETED() < 2* load.value_load && GET_POTENCY_SETED()  > 0.5 * load.value_load)
       {
-      Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
-      COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+        Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
       }
     }
    else if(Status_Message == OK)
@@ -91,24 +93,32 @@ void Load_State_Machine()
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
     }
   }
-    else if( load.state_load == RESISTANCE)
+  else if( load.state_load == RESISTANCE)
   {      
-    SET_RESISTANCE(load.value_state_load);
+    SET_RESISTANCE(load.value_load);
     initial_time = HAL_GetTick();
     HAL_Delay(2);
     if( Status_Message == OK)
     {
-      if(GET_RESISTANCE_SETED() < 2 * load.value_state_load && GET_RESISTANCE_SETED() > 0.5 * load.value_state_load)
+      if(GET_RESISTANCE_SETED() < 2 * load.value_load && GET_RESISTANCE_SETED() > 0.5 * load.value_load)
       { 
-      Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
-      COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+        Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
       }
     }
-    else if(Status_Message == OK)
-    {
-      Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
-      COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
-    }
+  }  
+  else if( load.state_load == ALTERATING_TIME_ON)
+  {      
+    Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+    if( Status_Message == OK)
+      {
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+      }
+  }
+  else if(Status_Message == OK)
+  {
+    Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
+    COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
   }
 }
 

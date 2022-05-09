@@ -36,7 +36,7 @@ StatusMessageTypeDef COM_Protocol_Check_Message(uint8_t *data, uint32_t length);
 
 bool CHECKSUM(uint8_t *data, uint8_t length);
 
-Load Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[]);
+void Convert_Received_Serial_Message_To_Load_State(uint8_t Received_Message[], Load * Load_Conversion_Aux);
 
 float Convert_Data1_And_Data2_to_uint16_t(uint8_t Received_Datas[]);
 
