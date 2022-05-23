@@ -183,13 +183,9 @@ void Convert_Received_Serial_Message_To_Load_State(uint8_t *Received_Message, Lo
       }
     else if(Received_Message[2] == 4)
     {
-      Load_Conversion_Aux -> state_load = ALTERATING_TIME_ON;
-      if(Received_Message[6] == 1)
-      {
-        (Load_Conversion_Aux -> security_time_state) = !(Load_Conversion_Aux -> security_time_state) ;
-      }   
+      Load_Conversion_Aux -> state_load = ALTERATING_TIME_ON; 
       else{
-      Load_Conversion_Aux -> time_load_on = 1000 * Convert_Data1_And_Data2_to_uint16_t(Received_Message); 
+        Load_Conversion_Aux -> time_load_on = 1000 * Convert_Data1_And_Data2_to_uint16_t(Received_Message); 
       }
     } 
     else

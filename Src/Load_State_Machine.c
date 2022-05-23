@@ -47,7 +47,7 @@ void Load_State_Machine_Init()
 void Load_State_Machine()
 {
   COM_Protocol_Receive_Communication_Control(&Status_Message, &load);
-  if(load.security_time_state) 
+  if(load.time_load_on == 0) 
   {
     if( (load.state_load == IDLE) || ((HAL_GetTick() - initial_time) > load.time_load_on) )
     {        
