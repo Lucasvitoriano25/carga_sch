@@ -20,7 +20,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>3681537197</Checksum>
+        <Checksum>502739890</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -138,7 +138,8 @@
         <Bp3>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\LOAD_State_Machine.c}.120.5" 0 0 1 "" 0 "" 0</Bp3>
         <Bp4>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\Src\com_protocol.c}.40.9" 0 0 1 "" 0 "" 0</Bp4>
         <Bp5>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\com_protocol.c}.46.9" 0 0 1 "" 0 "" 0</Bp5>
-        <Count>6</Count>
+        <Bp6>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\LOAD_State_Machine.c}.105.9" 0 0 1 "" 0 "" 0</Bp6>
+        <Count>7</Count>
     </Breakpoints2>
     <Aliases>
         <A0>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c" ""</A0>
