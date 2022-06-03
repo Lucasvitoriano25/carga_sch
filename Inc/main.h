@@ -93,8 +93,8 @@ void Error_Handler(void);
 #define ADC_CURRENT_GPIO_Port GPIOA
 #define ADC_VOLTAGE_Pin GPIO_PIN_1
 #define ADC_VOLTAGE_GPIO_Port GPIOA
-#define AD_To_mA 8.058608
 /* USER CODE BEGIN Private defines */
+#define AD_To_mA 0.008058608
 
 /* USER CODE END Private defines */
 

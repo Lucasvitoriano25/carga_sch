@@ -33,8 +33,6 @@ static float current_A = 0;
 static float potency_W = 0;
 static float resistance_Ohms = 0;
   
-/* USER CODE END 0 */
-  
 void Load_State_Machine_Init()
 {
   current_A = 0.20;
@@ -67,12 +65,12 @@ void Load_State_Machine()
         Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
       }
-    }
-   else if(Status_Message == OK)
+    else 
     {
       Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
       COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
     }
+   }
   }
   else if( load.state_load == POTENCY)
   {      
@@ -86,11 +84,11 @@ void Load_State_Machine()
         Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
       }
-    }
-   else if(Status_Message == OK)
-    {
-      Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
-      COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+      else 
+      {
+        Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+      }
     }
   }
   else if( load.state_load == RESISTANCE)
@@ -105,6 +103,11 @@ void Load_State_Machine()
         Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
       }
+      else 
+      {
+        Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
+        COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+      }
     }
   }  
   else if( load.state_load == ALTERATING_TIME_ON)
@@ -117,7 +120,8 @@ void Load_State_Machine()
   }
   else if(Status_Message == OK)
   {
-    Error_Setting_Value(Message_To_Communication, OUTRANGE_VALUE);
+    TURN_LOAD_OFF();
+    Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
     COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
   }
 }
@@ -145,3 +149,6 @@ void set_Resistance_Value(float Value)
     resistance_Ohms = Value;
   }
 }
+
+/* USER CODE END 0 */
+  

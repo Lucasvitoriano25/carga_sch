@@ -25,7 +25,6 @@ Load *Message_Received)
   
   while((*Status_Message != OK) && i < Attempts)
   { 
-
     if((HAL_UART_Receive(&USART_MICRO_COMMUNICATION, Received_UART_Message, tamanho,100)) != HAL_OK)
     {    
       i++;
@@ -184,14 +183,12 @@ void Convert_Received_Serial_Message_To_Load_State(uint8_t *Received_Message, Lo
     else if(Received_Message[2] == 4)
     {
       Load_Conversion_Aux -> state_load = ALTERATING_TIME_ON; 
-      else{
-        Load_Conversion_Aux -> time_load_on = 1000 * Convert_Data1_And_Data2_to_uint16_t(Received_Message); 
-      }
+      Load_Conversion_Aux -> time_load_on = 1000 * Convert_Data1_And_Data2_to_uint16_t(Received_Message); 
     } 
     else
     {
-      Error_Setting_Value(Message_To_Communication, INCONSISTENCY_IN_SETED_MODE);
-      COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
+      Load_Conversion_Aux -> state_load = IDLE;
+      Load_Conversion_Aux -> value_load = 0;
     }
   }
 }
@@ -205,7 +202,6 @@ void Convert_Load_Type_To_Serial_Message(Load load_to_be_converted, uint8_t *Mes
   Convert_float_to_2_uint8(load_to_be_converted.value_load,&LSB,&MSB);
   Message_Converted[3] = MSB;
   Message_Converted[4] = LSB;
-  Message_Converted[5] = load_to_be_converted.security_time_state;
   if(Message_Converted[5] == 4)
   {
     Message_Converted[6] = load_to_be_converted.security_time_state;
@@ -268,13 +264,8 @@ void Error_Setting_Value(uint8_t * error_message,StatusMessageTypeDef Error_Type
   memset(error_message, 0, sizeof error_message);
   if(Error_Type == OUTRANGE_VALUE)
   {
-    error_message[2] = 0xFA;
+    error_message[1] = 0xFA;
   }
-  if(Error_Type == INCONSISTENCY_IN_SETED_MODE)
-  {
-    error_message[2] = 0xF9;
-
-  }    
   Create_Checksum(error_message);
 
 }
