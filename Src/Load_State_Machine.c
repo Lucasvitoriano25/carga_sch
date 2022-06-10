@@ -60,7 +60,7 @@ void Load_State_Machine()
     initial_time = HAL_GetTick();
     HAL_Delay(1);
     if( Status_Message == OK){
-      if((GET_CURRENT_SETED() - AD_To_mA) < load.value_load && (GET_CURRENT_SETED() + AD_To_mA) > load.value_load)
+      if((GET_CURRENT_SETED() - 5 * AD_To_mA) < load.value_load && (GET_CURRENT_SETED() + 5 * AD_To_mA) > load.value_load)
       {  
         Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
