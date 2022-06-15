@@ -14,13 +14,13 @@
     <StLinkDriver>
         <stlinkserialNo>56330187</stlinkserialNo>
         <stlinkfoundProbes />
-        <stlinkResetStyle>1</stlinkResetStyle>
-        <stlinkResetStrategy>3</stlinkResetStrategy>
         <CStepIntDis>_ 0</CStepIntDis>
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
+        <stlinkResetStyle>1</stlinkResetStyle>
+        <stlinkResetStrategy>3</stlinkResetStrategy>
     </StLinkDriver>
     <DebugChecksum>
-        <Checksum>1243348597</Checksum>
+        <Checksum>2975665872</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -106,6 +106,12 @@
         <ShowTimeSum>1</ShowTimeSum>
         <SumSortOrder>0</SumSortOrder>
     </EventLog>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Count>0</Count>
+    </Breakpoints2>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
@@ -115,6 +121,13 @@
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
     </TermIOLog>
+    <Aliases>
+        <A0>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c" ""</A0>
+        <A1>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Src\main.c" ""</A1>
+        <A2>_ "C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\Src\main.c" ""</A2>
+        <Count>3</Count>
+        <SuppressDialog>1</SuppressDialog>
+    </Aliases>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>3</Mode>
@@ -128,17 +141,4 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints2>
-        <Count>0</Count>
-    </Breakpoints2>
-    <Aliases>
-        <A0>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c" ""</A0>
-        <A1>_ "C:\Users\Lesc\Desktop\carga_sch_Communication-master\Src\main.c" ""</A1>
-        <A2>_ "C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\Src\main.c" ""</A2>
-        <Count>3</Count>
-        <SuppressDialog>1</SuppressDialog>
-    </Aliases>
 </settings>

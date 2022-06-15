@@ -198,13 +198,13 @@ void Convert_Received_Serial_Message_To_Load_State(uint8_t *Received_Message, Lo
   }
 }
 
-void Convert_Load_Type_To_Serial_Message(Load load_to_be_converted, uint8_t *Message_Converted)
+void Convert_Load_Information_To_Serial_Message(Load load_to_be_converted, uint8_t *Message_Converted,float Value_Seted)
 {
   uint8_t MSB = 0;
   uint8_t LSB = 0;
   Message_Converted[1] = 6;
   Message_Converted[2] = Convert_Load_Type_To_uint8(load_to_be_converted);
-  Convert_float_to_2_uint8(load_to_be_converted.value_load,&LSB,&MSB);
+  Convert_float_to_2_uint8(Value_Seted,&LSB,&MSB);
   Message_Converted[3] = MSB;
   Message_Converted[4] = LSB;
   if(Message_Converted[5] == 4)

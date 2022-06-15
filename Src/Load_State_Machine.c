@@ -31,6 +31,11 @@ static uint8_t Message_To_Communication[8] = {0};
 static float current_A = 0;
 static float potency_W = 0;
 static float resistance_Ohms = 0;
+
+static float Current_Seted = 0;
+static float Potency_Seted = 0;
+static float Resistance_Seted = 0;
+
   
 void Load_State_Machine_Init()
 {
@@ -56,10 +61,12 @@ void Load_State_Machine()
   {      
     SET_CURRENT(load.value_load);
     HAL_Delay(2);
-    if( Status_Message == OK){
-      if((GET_CURRENT_SETED() - (10 * AD_To_mA )) < load.value_load && (GET_CURRENT_SETED() + (10 * AD_To_mA)) > load.value_load)
+    if( Status_Message == OK)
+    {
+      Current_Seted = GET_CURRENT_SETED();
+      if((Current_Seted - (10 * AD_To_mA )) < load.value_load && (Current_Seted + (10 * AD_To_mA)) > load.value_load)
       {  
-        Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+        Convert_Load_Information_To_Serial_Message(load, Message_To_Communication, Current_Seted);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
       }
     else 
@@ -75,9 +82,10 @@ void Load_State_Machine()
     HAL_Delay(2);
     if( Status_Message == OK)
     {
-      if(GET_POTENCY_SETED() < 2* load.value_load && GET_POTENCY_SETED()  > 0.5 * load.value_load)
+      Potency_Seted = GET_POTENCY_SETED();
+      if(Potency_Seted < 2* load.value_load && Potency_Seted  > 0.5 * load.value_load)
       {
-        Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+        Convert_Load_Information_To_Serial_Message(load, Message_To_Communication, Potency_Seted);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
       }
       else 
@@ -93,9 +101,10 @@ void Load_State_Machine()
     HAL_Delay(2);
     if( Status_Message == OK)
     {
-      if(GET_RESISTANCE_SETED() < 2 * load.value_load && GET_RESISTANCE_SETED() > 0.5 * load.value_load)
+      Resistance_Seted = GET_RESISTANCE_SETED();
+      if(Resistance_Seted < 2 * load.value_load && Resistance_Seted > 0.5 * load.value_load)
       { 
-        Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+        Convert_Load_Information_To_Serial_Message(load, Message_To_Communication, Resistance_Seted);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
       }
       else 
@@ -107,7 +116,7 @@ void Load_State_Machine()
   }  
   else if( load.state_load == ALTERATING_TIME_ON)
   {      
-    Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+    Convert_Load_Information_To_Serial_Message(load, Message_To_Communication, load.time_load_on);
     if( Status_Message == OK)
       {
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
@@ -117,7 +126,7 @@ void Load_State_Machine()
   {
     load.state_load = IDLE;
     TURN_LOAD_OFF();
-    Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
+    Convert_Load_Information_To_Serial_Message(load, Message_To_Communication, 0);
     COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
   }
 }
