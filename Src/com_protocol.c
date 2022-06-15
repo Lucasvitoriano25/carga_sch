@@ -248,7 +248,7 @@ int Convert_Load_Type_To_uint8(Load load_to_be_converted)
 
 void Create_Error_Message(uint8_t * error_message, StatusMessageTypeDef *data)
 { 
-  memset(error_message, 0, sizeof error_message);
+  memset(error_message, 0, 8 * sizeof (error_message));
   error_message[2] = COM_Protocol_Report_Erro(*data);
   error_message[7] = COM_Protocol_Report_Erro(*data);
 }

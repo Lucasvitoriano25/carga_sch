@@ -14,7 +14,7 @@
 /* USER CODE BEGIN PV */
 static StatusMessageTypeDef Status_Message;
 static StatusMessageTypeDef Status_Message_Transceiver;
-static Load load = {IDLE, 0, 30000, ON};
+static Load load = {IDLE, 0, 60000, ON};
 static uint32_t original_time = 0; 
 static uint32_t initial_time = 0;
 static uint8_t Message_To_Communication[8] = {0};
@@ -45,9 +45,9 @@ void Load_State_Machine_Init()
 void Load_State_Machine()
 {
   COM_Protocol_Receive_Communication_Control(&Status_Message, &load);
-  if(load.time_load_on == 0) 
+  if(load.time_load_on != 0) 
   {
-    if( (load.state_load == IDLE) || ((HAL_GetTick() - initial_time) > load.time_load_on) )
+    if((load.state_load == IDLE) || ((HAL_GetTick() - initial_time) > load.time_load_on))
     {        
         initial_time = HAL_GetTick();
         TURN_LOAD_OFF();
@@ -57,7 +57,6 @@ void Load_State_Machine()
   if(load.state_load == CURRENT)
   {      
     SET_CURRENT(load.value_load);
-    initial_time = HAL_GetTick();
     HAL_Delay(1);
     if( Status_Message == OK){
       if((GET_CURRENT_SETED() - 5 * AD_To_mA) < load.value_load && (GET_CURRENT_SETED() + 5 * AD_To_mA) > load.value_load)
@@ -75,7 +74,6 @@ void Load_State_Machine()
   else if( load.state_load == POTENCY)
   {      
     SET_POTENCY(load.value_load);
-    initial_time = HAL_GetTick();
     HAL_Delay(2);
     if( Status_Message == OK)
     {
@@ -94,7 +92,6 @@ void Load_State_Machine()
   else if( load.state_load == RESISTANCE)
   {      
     SET_RESISTANCE(load.value_load);
-    initial_time = HAL_GetTick();
     HAL_Delay(2);
     if( Status_Message == OK)
     {
@@ -120,6 +117,7 @@ void Load_State_Machine()
   }
   else if(Status_Message == OK)
   {
+    load.state_load = IDLE;
     TURN_LOAD_OFF();
     Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
     COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);
