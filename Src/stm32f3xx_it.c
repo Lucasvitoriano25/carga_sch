@@ -23,6 +23,7 @@
 #include "stm32f3xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Load.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,6 +59,12 @@
 /* External variables --------------------------------------------------------*/
 extern DMA_HandleTypeDef hdma_adc1;
 /* USER CODE BEGIN EV */
+extern Load load;
+extern uint16_t ADC_VALUES[];
+    
+extern ADC_HandleTypeDef hadc1;
+
+extern DAC_HandleTypeDef hdac1;
 
 /* USER CODE END EV */
 
@@ -206,7 +213,19 @@ void DMA1_Channel1_IRQHandler(void)
   
   /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc1);
-  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */  
+
+  /*When the dma ends the data transfer the load compensate the possibly 
+  divergence between the value asked and the value seted */
+  
+  if(load.state_load == POTENCY)
+  {   
+    SET_POTENCY(load.value_load);
+  }
+  else if( load.state_load == RESISTANCE)
+  {      
+    SET_RESISTANCE(load.value_load);
+  }
 
   /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
@@ -215,3 +234,4 @@ void DMA1_Channel1_IRQHandler(void)
 
 
 /* USER CODE END 1 */
+

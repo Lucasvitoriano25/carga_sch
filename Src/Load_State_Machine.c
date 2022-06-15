@@ -14,9 +14,8 @@
 /* USER CODE BEGIN PV */
 static StatusMessageTypeDef Status_Message;
 static StatusMessageTypeDef Status_Message_Transceiver;
-static Load load = {IDLE, 0, 60000, ON};
-static uint32_t original_time = 0; 
-static uint32_t initial_time = 0;
+Load load = {IDLE, 0, 60000, ON};
+uint32_t initial_time = 0;
 static uint8_t Message_To_Communication[8] = {0};
 /* USER CODE END PV */
 
@@ -38,14 +37,13 @@ void Load_State_Machine_Init()
   current_A = 0.20;
   potency_W = 0;
   resistance_Ohms = 0;
-  original_time = HAL_GetTick();
   Load_Init();
 }
 /* Para debug no IAR void Load_State_Machine(E_Carga_State Carga_State){ */
 void Load_State_Machine()
 {
   COM_Protocol_Receive_Communication_Control(&Status_Message, &load);
-  if(load.time_load_on != 0) 
+  if(load.security_time_state == ON) 
   {
     if((load.state_load == IDLE) || ((HAL_GetTick() - initial_time) > load.time_load_on))
     {        
@@ -57,9 +55,9 @@ void Load_State_Machine()
   if(load.state_load == CURRENT)
   {      
     SET_CURRENT(load.value_load);
-    HAL_Delay(1);
+    HAL_Delay(2);
     if( Status_Message == OK){
-      if((GET_CURRENT_SETED() - 5 * AD_To_mA) < load.value_load && (GET_CURRENT_SETED() + 5 * AD_To_mA) > load.value_load)
+      if((GET_CURRENT_SETED() - (10 * AD_To_mA )) < load.value_load && (GET_CURRENT_SETED() + (10 * AD_To_mA)) > load.value_load)
       {  
         Convert_Load_Type_To_Serial_Message(load, Message_To_Communication);
         COM_Protocol_Transceiver_Communication_Control(&Status_Message_Transceiver, Message_To_Communication);

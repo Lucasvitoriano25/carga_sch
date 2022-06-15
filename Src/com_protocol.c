@@ -8,7 +8,7 @@
 //uint8_t message[20];
 
 extern UART_HandleTypeDef huart1;
-
+extern uint32_t initial_time;
 static uint8_t Status_Message_Receiver[tamanho];
 static uint8_t Received_UART_Message[tamanho];
 static StatusMessageTypeDef Status_Message_Transceiver;
@@ -184,6 +184,11 @@ void Convert_Received_Serial_Message_To_Load_State(uint8_t *Received_Message, Lo
     {
       Load_Conversion_Aux -> state_load = ALTERATING_TIME_ON; 
       Load_Conversion_Aux -> time_load_on = 1000 * Convert_Data1_And_Data2_to_uint16_t(Received_Message); 
+      Load_Conversion_Aux -> security_time_state = ON;
+      initial_time = HAL_GetTick();
+      if(Load_Conversion_Aux -> time_load_on == 0){
+        Load_Conversion_Aux -> security_time_state = OFF;
+      }
     } 
     else
     {
@@ -261,7 +266,7 @@ void Create_Checksum(uint8_t * vector)
 
 void Error_Setting_Value(uint8_t * error_message,StatusMessageTypeDef Error_Type)
 {
-  memset(error_message, 0, sizeof error_message);
+   memset(error_message, 0, 8 * sizeof (error_message));
   if(Error_Type == OUTRANGE_VALUE)
   {
     error_message[1] = 0xFA;

@@ -94,7 +94,10 @@ void Error_Handler(void);
 #define ADC_VOLTAGE_Pin GPIO_PIN_1
 #define ADC_VOLTAGE_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
-#define AD_To_mA 0.008058608
+
+#define I_To_AD  1363.64
+#define AD_To_mA  ((3.3/4095)/(0.1))
+#define AD_To_Tension  0.017
 
 /* USER CODE END Private defines */
 
