@@ -1,30 +1,30 @@
-"C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c"
+"C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_gpio.c"
 -std=c11
 -ferror-limit=0
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\EWARM/../Inc
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM/../Inc
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\EWARM/../Drivers/STM32F3xx_HAL_Driver/Inc
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM/../Drivers/STM32F3xx_HAL_Driver/Inc
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\EWARM/../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM/../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\EWARM/../Drivers/CMSIS/Device/ST/STM32F3xx/Include
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM/../Drivers/CMSIS/Device/ST/STM32F3xx/Include
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\EWARM/../Drivers/CMSIS/Include
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\EWARM/../Drivers/CMSIS/Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc\c
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\Inc
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\Inc
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\Drivers\STM32F3xx_HAL_Driver\Inc
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\Drivers\STM32F3xx_HAL_Driver\Inc
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\Drivers\STM32F3xx_HAL_Driver\Inc\Legacy
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\Drivers\STM32F3xx_HAL_Driver\Inc\Legacy
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\Drivers\CMSIS\Device\ST\STM32F3xx\Include
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\Drivers\CMSIS\Device\ST\STM32F3xx\Include
 -I
-C:\Users\lucas vitoriano\Desktop\carga_sch_Communication-master\Drivers\CMSIS\Include
+C:\Users\lucas vitoriano\Desktop\Firmware_Carga - Funcionando\Drivers\CMSIS\Include
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0
