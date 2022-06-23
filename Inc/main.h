@@ -96,7 +96,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 
 #define I_To_AD  1363.64
-#define AD_To_mA  ((3.3/4095)/(0.1))
+#define AD_To_mA  ((3.3/4095)/(0.1))/6
 #define AD_To_Tension  0.017
 
 /* USER CODE END Private defines */

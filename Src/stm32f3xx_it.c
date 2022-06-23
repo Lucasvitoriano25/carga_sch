@@ -213,7 +213,7 @@ void DMA1_Channel1_IRQHandler(void)
   
   /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc1);
-  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */  
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 
   /*When the dma ends the data transfer the load compensate the possibly 
   divergence between the value asked and the value seted */
